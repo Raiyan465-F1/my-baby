@@ -1,101 +1,242 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+const messages = [
+	"",
+	"Are you sure?",
+	"Really sure?",
+	"Think again!",
+	"Last chance!",
+	"Surely you're kidding?",
+	"You're breaking my heart 💔",
+];
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+function Fireworks() {
+	return (
+		<div className="fireworks">
+			{[...Array(10)].map((_, i) => (
+				<div
+					key={_}
+					className="firework"
+					style={{
+						left: `${Math.random() * 100}%`,
+						top: `${Math.random() * 100}%`,
+						animationDelay: `${Math.random() * 2}s`,
+					}}
+				/>
+			))}
+		</div>
+	);
+}
+
+function FallingHearts() {
+	return (
+		<div className="falling-hearts">
+			{[...Array(20)].map((_, i) => (
+				<div
+					key={_}
+					className="heart"
+					style={{
+						left: `${Math.random() * 100}%`,
+						animationDuration: `${Math.random() * 3 + 2}s`,
+						animationDelay: `${Math.random() * 2}s`,
+					}}
+				>
+					❤️
+				</div>
+			))}
+		</div>
+	);
+}
+
+function SpinningCats() {
+	return (
+		<div className="spinning-cats">
+			{[...Array(15)].map((_, i) => (
+				<motion.div
+					key={_}
+					className="spinning-cat"
+					initial={{ scale: 0, rotate: 0 }}
+					animate={{
+						scale: [0, 1, 1, 0],
+						rotate: [0, 360, 720, 1080],
+						x: [
+							0,
+							Math.random() * 200 - 100,
+							Math.random() * 400 - 200,
+							Math.random() * 200 - 100,
+							0,
+						],
+						y: [
+							0,
+							Math.random() * 200 - 100,
+							Math.random() * 400 - 200,
+							Math.random() * 200 - 100,
+							0,
+						],
+					}}
+					transition={{
+						duration: Math.random() * 3 + 5,
+						ease: "easeInOut",
+						times: [0, 0.2, 0.8, 1],
+						repeat: Number.POSITIVE_INFINITY,
+						repeatDelay: Math.random() * 2,
+					}}
+					style={{
+						position: "absolute",
+						left: `${Math.random() * 100}%`,
+						top: `${Math.random() * 100}%`,
+					}}
+				>
+					<Image
+						src="/placeholder.svg?height=100&width=100"
+						alt="Spinning cat"
+						width={100}
+						height={100}
+					/>
+				</motion.div>
+			))}
+		</div>
+	);
+}
+
+const bounceAnimation = {
+	y: [0, -20, 0],
+	scale: [1, 1.2, 1],
+	transition: {
+		duration: 0.6,
+		repeat: Number.POSITIVE_INFINITY,
+		repeatType: "reverse" as const,
+	},
+};
+
+function AnimatedText({ text }: { text: string }) {
+	return (
+		<div className="flex justify-center">
+			<motion.span
+				animate={bounceAnimation}
+				style={{ display: "inline-block" }}
+				transition={{
+					delay: 0.05,
+					repeat: Number.POSITIVE_INFINITY,
+					repeatType: "reverse",
+				}}
+				className="text-4xl font-bold text-pink-600"
+			>
+				{text}
+			</motion.span>
+		</div>
+	);
+}
+
+export default function ValentinePage() {
+	const [currentMessage, setCurrentMessage] = useState(0);
+	const [noButtonSize, setNoButtonSize] = useState(100);
+	const [yesButtonSize, setYesButtonSize] = useState(100);
+	const [showNoButton, setShowNoButton] = useState(true);
+	const [popNoButton, setPopNoButton] = useState(false);
+	const [showCelebration, setShowCelebration] = useState(false);
+
+	useEffect(() => {
+		if (showCelebration) {
+			const timer = setTimeout(() => setShowCelebration(false), 8000);
+			return () => clearTimeout(timer);
+		}
+	}, [showCelebration]);
+
+	const handleNoClick = () => {
+		if (currentMessage < messages.length - 2) {
+			setCurrentMessage(currentMessage + 1);
+			setNoButtonSize(Math.max(noButtonSize - 15, 0));
+			setYesButtonSize(yesButtonSize + 15);
+		} else if (currentMessage === messages.length - 2) {
+			setCurrentMessage(currentMessage + 1);
+			setPopNoButton(true);
+			setTimeout(() => setShowNoButton(false), 500); // Hide button after pop animation
+		} else {
+			setShowNoButton(false);
+		}
+	};
+
+	const handleYesClick = () => {
+		setCurrentMessage(messages.length);
+		setShowCelebration(true);
+	};
+
+	return (
+		<div className="flex flex-col items-center justify-center min-h-screen bg-pink-100 p-4 overflow-hidden">
+			{showCelebration && (
+				<>
+					<Fireworks />
+					<FallingHearts />
+					<SpinningCats />
+				</>
+			)}
+			<motion.div
+				initial={{ scale: 0.5, opacity: 0 }}
+				animate={{ scale: 1, opacity: 1 }}
+				transition={{ duration: 0.5 }}
+				className="text-center z-10"
+			>
+				{currentMessage < messages.length ? (
+					<>
+						<h2 className="text-2xl font-bold text-pink-500 mb-4">
+							{messages[currentMessage]}
+						</h2>
+						<h1 className="text-4xl font-bold text-pink-600 mb-8">
+							Will you be my valentine?
+						</h1>
+						<div className="space-x-4">
+							<motion.button
+								whileHover={{ scale: 1.1 }}
+								whileTap={{ scale: 0.95 }}
+								style={{ fontSize: `${yesButtonSize}%` }}
+								className="bg-green-500 text-white font-bold py-2 px-4 rounded-full hover:bg-green-600 transition duration-300"
+								onClick={handleYesClick}
+							>
+								Yes
+							</motion.button>
+							<AnimatePresence>
+								{showNoButton && (
+									<motion.button
+										key="no-button"
+										whileHover={{ scale: 1.1 }}
+										whileTap={{ scale: 0.95 }}
+										style={{ fontSize: `${noButtonSize}%` }}
+										className="bg-red-500 text-white font-bold py-2 px-4 rounded-full hover:bg-red-600 transition duration-300"
+										onClick={handleNoClick}
+										animate={
+											popNoButton
+												? {
+														scale: [1, 1.2, 0],
+														rotate: [0, 0, 180],
+														opacity: [1, 1, 0],
+													}
+												: {}
+										}
+										transition={
+											popNoButton
+												? {
+														duration: 0.5,
+														times: [0, 0.3, 1],
+													}
+												: {}
+										}
+										exit={{ scale: 0, opacity: 0 }}
+									>
+										No
+									</motion.button>
+								)}
+							</AnimatePresence>
+						</div>
+					</>
+				) : (
+					<AnimatedText text="I knew you couldn't say no! 💖" />
+				)}
+			</motion.div>
+		</div>
+	);
 }
